@@ -4,7 +4,7 @@ GET
   else
     if url is in sites.txt
       if url pathname exists in archive/sites
-        yes: serve <-- do this!
+        yes: serve 
         no: loading.html
     else
       no: 404
@@ -13,8 +13,8 @@ GET
 POST
   if url is in sites.txt
     if url is in archive/sites
-    yes: serve url <-- done
-    no: serve loading.html <--done
+    yes: serve url
+    no: serve loading.html
   else
     redirect to get
 */
