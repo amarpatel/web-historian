@@ -33,13 +33,13 @@ exports.handleRequest = function (req, res) {
       url = 'index.html';
       fs.readFile(path.join(archive.paths.siteAssets, url), function (err, data) {
         res.writeHead(200);
-        res.end(data.toString());  
+        res.end(data);  
       });
     } else if (req.url === '/styles.css' || req.url === '/public/styles.css') {
       url = '/styles.css';
       fs.readFile(path.join(archive.paths.siteAssets, url), function (err, data) {
         res.writeHead(200);
-        res.end(data.toString());  
+        res.end(data);  
       });
     } else {
 //   else
