@@ -25,16 +25,53 @@ exports.initialize = function(pathsObj){
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
-exports.readListOfUrls = function(){
+exports.serveAssets = function (res, url, callback) {
+  fs.readFile(path.join(exports.paths.archivedSites, url), function (err, data) {
+    res.writeHead(200);
+    res.end(data);
+  });
 };
 
-exports.isUrlInList = function(){
+exports.readListOfUrls = function(callback){
+  fs.readFile(exports.paths.list, function (err, sites) {
+    if (callback) {
+      callback(sites.toString().split('\n'));
+    }
+  });
 };
 
-exports.addUrlToList = function(){
+exports.isUrlInList = function(url, callback){
+  exports.readListOfUrls(function (sites) {
+    var found = false;
+    for (var i=0;i<sites.length;i++) {
+      if (sites[i] === url) { found = true; }
+    }
+    callback(found);
+  });
 };
 
-exports.isURLArchived = function(){
+exports.addUrlToList = function(url, callback){
+  fs.appendFile(exports.paths.list, url + '\n', function (err) {
+    if (err) {console.log(err)};
+    callback();
+  });
+};
+
+exports.isURLArchived = function(url, callback){
+  fs.exists(path.join(exports.paths.archivedSites, url), function (exists) {
+    callback(exists);
+  });
+};
+
+exports.getURL = function (req, callback) {
+  var receivedData = '';
+  req.on('data', function (chunk) {
+    receivedData += chunk;
+  });
+  req.on('end', function () {
+    receivedData = receivedData.substr(4,receivedData.length)
+    callback(receivedData);
+  });
 };
 
 exports.downloadUrls = function(){
