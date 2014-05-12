@@ -22,7 +22,6 @@ POST
 var path = require('path');
 var archive = require('../helpers/archive-helpers');
 var fs = require('fs');
-// require more modules/folders here!
 
 exports.handleRequest = function (req, res) {
   console.log('method:',req.method, 'url:', req.url)
@@ -43,7 +42,6 @@ exports.handleRequest = function (req, res) {
         res.end(data.toString());  
       });
     } else {
-      // url = req.url.substr(1,req.url.length);
 //   else
 //     if url is in sites.txt
       archive.isUrlInList(url, function (found) {
